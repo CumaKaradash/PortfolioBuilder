@@ -47,6 +47,8 @@ export default function PortfolioPage() {
   const [project1Title, setProject1Title] = useState(defaultProject1Title)
   const [project1Description, setProject1Description] = useState(defaultProject1Description)
   const [project1Details, setProject1Details] = useState(defaultProject1Details)
+  // Modal state
+  const [showDetailsModal, setShowDetailsModal] = useState(false)
 
   // Load data from localStorage on component mount
   useEffect(() => {
@@ -118,13 +120,28 @@ export default function PortfolioPage() {
                 <p className="text-sm text-muted-foreground">{project1Details}</p>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" className="w-full bg-transparent">
+                <Button variant="outline" className="w-full bg-transparent" onClick={() => setShowDetailsModal(true)}>
                   Detayları Gör
                 </Button>
               </CardFooter>
             </Card>
             {/* Diğer proje kartları buraya eklenebilir ve benzer şekilde localStorage'dan yüklenebilir */}
           </div>
+          {/* Modal */}
+          {showDetailsModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8 max-w-lg w-full relative">
+                <h3 className="text-2xl font-bold mb-4">{project1Title} Detayları</h3>
+                <p className="mb-6 text-muted-foreground">{project1Details}</p>
+                <Button variant="outline" className="absolute top-4 right-4" size="icon" onClick={() => setShowDetailsModal(false)}>
+                  ✕
+                </Button>
+                <Button className="w-full mt-4" onClick={() => setShowDetailsModal(false)}>
+                  Kapat
+                </Button>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Yetenekler Bölümü */}
